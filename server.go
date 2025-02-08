@@ -10,7 +10,6 @@ import (
 
 	"github.com/joho/godotenv"
 	"github.com/labstack/echo/v4"
-	"github.com/labstack/echo/v4/middleware"
 	"github.com/slack-go/slack"
 )
 
@@ -18,18 +17,10 @@ func main() {
 	godotenv.Load() 
 
 	e := echo.New()
-	e.Use(middleware.KeyAuth(func(key string, c echo.Context) (bool, error) {
-		return key == os.Getenv("API_KEY"), nil
-	}))
 	e.GET("/", func(c echo.Context) error {
 		return c.String(http.StatusOK, "Hello, World!")
 	})
 	e.POST("/webhooks/:slug", processWebhook)
-
-	fmt.Println("Starting server on port", os.Getenv("PORT"))
-	fmt.Println("API_KEY", os.Getenv("API_KEY"))
-	fmt.Println("NGROK_DOMAIN", os.Getenv("NGROK_DOMAIN"))
-	fmt.Println("SLACK_TOKEN", os.Getenv("SLACK_TOKEN"))
 
 	e.Logger.Fatal(e.Start(":" + os.Getenv("PORT")))
 }
