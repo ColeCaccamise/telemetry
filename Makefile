@@ -1,4 +1,4 @@
-.PHONY: build run dev clean prod
+.PHONY: build run dev clean prod docker
 
 build:
 	mkdir -p bin
@@ -11,6 +11,10 @@ dev: build run
 
 prod: build
 	./bin/telemetry
+
+docker:
+	docker build -t telemetry .
+	docker run -p 1323:1323 telemetry
 
 clean:
 	rm -rf bin
