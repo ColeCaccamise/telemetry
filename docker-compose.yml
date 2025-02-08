@@ -1,0 +1,10 @@
+services:
+  telemetry:
+    build: .
+    ports:
+      - '1323:1323'
+    environment:
+      - SLACK_TOKEN=${SLACK_TOKEN}
+      - NGROK_DOMAIN=${NGROK_DOMAIN}
+      - PORT=1323
+      - API_KEY=${API_KEY}
